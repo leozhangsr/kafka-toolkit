@@ -11,15 +11,18 @@
 
     <modules>
         <module>kafka-common</module>
+        <module>offset-kit</module>
     </modules>
 
     <properties>
         <scala.version>2.11</scala.version>
-        <zookeeper.version>3.4.5</zookeeper.version>
         <kafka-clients.version>2.4.1</kafka-clients.version>
         <kafka.version>0.8.2.2</kafka.version>
+        <zookeeper.version>3.4.5</zookeeper.version>
+        <curator-recipes.version>4.1.0</curator-recipes.version>
         <guava.version>30.1.1-jre</guava.version>
         <jackson.databind>2.12.4</jackson.databind>
+        <fastjson.version>1.2.78</fastjson.version>
         <config.version>1.3.3</config.version>
         <slf4j.version>1.7.30</slf4j.version>
         <args4j.version>2.33</args4j.version>
@@ -41,7 +44,7 @@
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
-                <version>4.1.0</version>
+                <version>${curator-recipes.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.zookeeper</groupId>
@@ -68,6 +71,11 @@
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.databind}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.typesafe</groupId>
