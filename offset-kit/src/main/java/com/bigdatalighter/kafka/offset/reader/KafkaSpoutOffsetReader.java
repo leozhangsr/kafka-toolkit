@@ -7,9 +7,9 @@ import org.apache.curator.framework.CuratorFramework;
 /**
  * @author: Leo Zhang(johnson5211.work@gmail.com)
  **/
-public class KafkaSpoutConsumerOffsetReader extends AbstractZookeeperOffsetReader {
+public class KafkaSpoutOffsetReader extends AbstractZookeeperOffsetReader {
 
-    public KafkaSpoutConsumerOffsetReader(CuratorFramework curator, String path) {
+    public KafkaSpoutOffsetReader(CuratorFramework curator, String path) {
         super(curator, path);
     }
 
@@ -48,7 +48,7 @@ public class KafkaSpoutConsumerOffsetReader extends AbstractZookeeperOffsetReade
         private Integer partition;
 
 
-        public class Topology {
+        public static class Topology {
             String id;
             String name;
 
@@ -72,7 +72,7 @@ public class KafkaSpoutConsumerOffsetReader extends AbstractZookeeperOffsetReade
             }
         }
 
-        public class HostAndPort {
+        public static class HostAndPort {
             String host;
             Integer port;
 

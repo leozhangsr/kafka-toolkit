@@ -2,6 +2,8 @@ package com.bigdatalighter.kafka.offset.reader;
 
 import com.bigdatalighter.kafka.common.KafkaPartitionOffset;
 import com.bigdatalighter.kafka.common.KafkaTopicOffset;
+import com.bigdatalighter.kafka.utils.CuratorManager;
+import com.bigdatalighter.kafka.utils.PathMerger;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.slf4j.Logger;
@@ -16,10 +18,9 @@ import java.util.List;
  **/
 public abstract class AbstractZookeeperOffsetReader implements IOffsetReader {
     protected final Logger logger = LoggerFactory.getLogger(AbstractZookeeperOffsetReader.class);
-    public static final String PATH_DELIMITER = "/";
     protected CuratorFramework curator;
     protected String namespace;
-    private StringBuilder pathMerger;
+    private PathMerger pathMerger;
 
     public AbstractZookeeperOffsetReader(CuratorFramework curator, String namespace) {
         this.curator = curator;
@@ -29,7 +30,7 @@ public abstract class AbstractZookeeperOffsetReader implements IOffsetReader {
         if (!CuratorFrameworkState.STARTED.equals(state)) {
             this.curator.start();
         }
-        pathMerger = new StringBuilder();
+        pathMerger = new PathMerger();
     }
 
     @Override
@@ -57,16 +58,7 @@ public abstract class AbstractZookeeperOffsetReader implements IOffsetReader {
     }
 
     protected String mergePath(String... paths) {
-        for (int i = 0; i < paths.length; i++) {
-            if (i == 0 && paths[i].startsWith(PATH_DELIMITER)) {
-                pathMerger.append(paths[i]);
-            } else {
-                pathMerger.append(PATH_DELIMITER).append(paths[i]);
-            }
-        }
-        String path = pathMerger.toString();
-        pathMerger.delete(0, pathMerger.length());
-        return path;
+        return pathMerger.mergePath(paths);
     }
 
     public abstract String getOffsetPath(String group, String topic);
@@ -75,7 +67,7 @@ public abstract class AbstractZookeeperOffsetReader implements IOffsetReader {
 
     @Override
     public void close() throws IOException {
-        this.curator.close();
+        CuratorManager.close(curator);
     }
 
 }

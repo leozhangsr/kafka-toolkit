@@ -8,13 +8,16 @@ import org.apache.curator.framework.CuratorFramework;
  **/
 public class Kafka08ConsumerOffsetReader extends AbstractZookeeperOffsetReader {
 
+    public static final String CONSUMERS = "consumers";
+    public static final String OFFSETS = "offsets";
+
     public Kafka08ConsumerOffsetReader(CuratorFramework curator, String path) {
         super(curator, path);
     }
 
     @Override
     public String getOffsetPath(String group, String topic) {
-        return mergePath("consumers", group, "offsets", topic);
+        return mergePath(CONSUMERS, group, OFFSETS, topic);
     }
 
     @Override

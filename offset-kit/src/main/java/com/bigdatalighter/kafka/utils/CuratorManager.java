@@ -37,6 +37,15 @@ public class CuratorManager {
         return framework;
     }
 
+    public static void close(CuratorFramework curator) {
+        String zk = curator.getZookeeperClient().getCurrentConnectionString();
+        Map<String, CuratorFramework> map = curatorCache.get();
+        if (map != null) {
+            map.remove(zk);
+        }
+        curator.close();
+    }
+
     public static void destroy() {
         Map<String, CuratorFramework> curatorMap = curatorCache.get();
         if (curatorMap != null) {

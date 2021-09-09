@@ -7,7 +7,7 @@ import org.kohsuke.args4j.Option;
  * @author: Leo Zhang(johnson5211.work@gmail.com)
  **/
 public class OffsetReaderParams {
-    @Option(name="--type", aliases = "-t",  usage = "Type of OffsetReader,known type:consumer08,consumer_new,broker_log,spout,camus", required = true)
+    @Option(name="--type", aliases = "-t",  usage = "Type of OffsetReader,known type:consumer08,consumer-new,broker-log,spout,camus,json-file", required = true)
     private String type;
     @Option(name="--zookeeper", aliases = "-zk", usage = "Zookeeper connection in the form host:port")
     private String zookeeper;
@@ -21,6 +21,10 @@ public class OffsetReaderParams {
     private String group;
     @Option(name = "--from", aliases = "-f", usage = "From earliest/latest offset, only supported by type:broker_log")
     private String from = "latest";
+    @Option(name = "--fi", usage = "File to read from")
+    private String fi;
+    @Option(name = "-fo", usage = "File to store offset")
+    private String fo;
 
     public String getType() {
         return type;
@@ -76,6 +80,22 @@ public class OffsetReaderParams {
 
     public void setFrom(String from) {
         this.from = from;
+    }
+
+    public String getFi() {
+        return fi;
+    }
+
+    public void setFi(String fi) {
+        this.fi = fi;
+    }
+
+    public String getFo() {
+        return fo;
+    }
+
+    public void setFo(String fo) {
+        this.fo = fo;
     }
 
     @Override
